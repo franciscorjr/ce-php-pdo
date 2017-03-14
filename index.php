@@ -1,3 +1,7 @@
+<?php
+require_once "conexaoDB.php";
+$conn = conexaoDB();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -41,6 +45,32 @@
         </nav>
     </div>
 
+    <?php
+    $consulta = "SELECT * FROM alunos ";
+    $stmt = $conn->prepare($consulta);
+    $stmt->execute();
+    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $table = "<table class=\"table\">
+        <thead>
+        <tr>
+            <th>Nome do Aluno</th>
+            <th>Nota</th>
+        </tr>
+        </thead>
+        <tbody>";
+        foreach ($resultado as $r) {
+        $nome = $r['nome'];
+        $nota = $r['nota'];
+        $table .= "<tr>
+            <td>$nome</td>
+            <td>$nota</td>
+        </tr>";
+        }
+        $table .= "</tbody>
+    </table>";
+    //echo $table;
+    echo $table;
+    ?>
 
     <!-- Site footer -->
     <footer class="footer">
